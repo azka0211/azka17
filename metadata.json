@@ -1,0 +1,6 @@
+{
+  "name": "IoT Smart Home Simulator",
+  "description": "Sistem IoT pengontrolan relay lampu, monitoring sensor suhu/kelembaban DHT11/DHT22 dengan simulator Telegram Bot dan Generator Kode Arduino.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
