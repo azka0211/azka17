@@ -121,7 +121,7 @@ export default function TelegramSimulator({
   // Quick Command Keyboard Telegram
   const quickKeyboards = [
     { cmd: '/start', desc: 'Menu' },
-    { cmd: '/sensor', desc: 'DHT22' },
+    { cmd: '/sensor', desc: 'DHT11' },
     { cmd: '/lampu1_on', desc: 'L1 On' },
     { cmd: '/lampu1_off', desc: 'L1 Off' },
     { cmd: '/all_off', desc: 'Semua Off' },

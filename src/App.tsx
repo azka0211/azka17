@@ -26,10 +26,10 @@ export default function App() {
 
   // 1. Relays State
   const [relays, setRelays] = useState<Relay[]>([
-    { id: 1, name: 'Lampu Utama (Living)', pin: 12, status: false, type: 'utama' },
-    { id: 2, name: 'Lampu Kamar (Sleep)', pin: 14, status: false, type: 'kamar' },
+    { id: 1, name: 'Lampu Utama (Living)', pin: 25, status: false, type: 'utama' },
+    { id: 2, name: 'Lampu Kamar (Sleep)', pin: 26, status: false, type: 'kamar' },
     { id: 3, name: 'Variasi Lampu 1 (Relay 3)', pin: 27, status: false, type: 'variasi1' },
-    { id: 4, name: 'Variasi Lampu 2 (Relay 4)', pin: 26, status: false, type: 'variasi2' },
+    { id: 4, name: 'Variasi Lampu 2 (Relay 4)', pin: 14, status: false, type: 'variasi2' },
   ]);
 
   // 2. Sensor State (DHT)
@@ -52,8 +52,8 @@ export default function App() {
   // 4. Arduino Serial Logs State
   const [logs, setLogs] = useState<LogEntry[]>([
     { id: '1', timestamp: '01:04:12', source: 'SYSTEM', message: 'ESP32 system booting, CPU frequency: 240MHz.', type: 'info' },
-    { id: '2', timestamp: '01:04:13', source: 'SYSTEM', message: 'Configuring output pins. RELAY_1=GPIO12, RELAY_2=GPIO14, RELAY_3=GPIO27, RELAY_4=GPIO26', type: 'info' },
-    { id: '3', timestamp: '01:04:13', source: 'DHT', message: 'DHT22 sensor initialized on GPIO 4 successfully.', type: 'success' },
+    { id: '2', timestamp: '01:04:13', source: 'SYSTEM', message: 'Configuring output pins. RELAY_1=GPIO25, RELAY_2=GPIO26, RELAY_3=GPIO27, RELAY_4=GPIO14', type: 'info' },
+    { id: '3', timestamp: '01:04:13', source: 'DHT', message: 'DHT11 sensor initialized on GPIO 4 successfully.', type: 'success' },
     { id: '4', timestamp: '01:04:14', source: 'WIFI', message: 'Searching networks... Connecting to "SmartHome_WiFi"...', type: 'info' },
     { id: '5', timestamp: '01:04:15', source: 'WIFI', message: 'WiFi Connected! Local IP Address: 192.168.1.134, RSSI: -58 dBm', type: 'success' },
     { id: '6', timestamp: '01:04:15', source: 'TELEGRAM', message: 'Secure client setup completed. Starting UniversalTelegramBot engine in insecure SSL mode.', type: 'info' },
@@ -144,7 +144,7 @@ export default function App() {
         if (r.id === 4) return { ...r, status: step % 2 !== 0 };
         return r;
       }));
-      addLog('RELAY', `Variasi 1 Langkah ${step+1}: GPIO 27=${step % 2 === 0 ? 'LOW' : 'HIGH'}, GPIO 26=${step % 2 !== 0 ? 'LOW' : 'HIGH'}`, 'info');
+      addLog('RELAY', `Variasi 1 Langkah ${step+1}: GPIO 27=${step % 2 === 0 ? 'LOW' : 'HIGH'}, GPIO 14=${step % 2 !== 0 ? 'LOW' : 'HIGH'}`, 'info');
       step++;
       
       if (step >= 8) {
@@ -168,7 +168,7 @@ export default function App() {
       setRelays(prev => prev.map(r => {
         return { ...r, status: step % 2 === 0 };
       }));
-      addLog('RELAY', `Variasi 2 Strobe ${step+1}: Pin 12,14,27,26 ter-modulasi bersamaan.`, 'info');
+      addLog('RELAY', `Variasi 2 Strobe ${step+1}: Pin 25,26,27,14 ter-modulasi bersamaan.`, 'info');
       step++;
 
       if (step >= 10) {
@@ -244,7 +244,7 @@ export default function App() {
         if (r && !r.status) {
           toggleRelay(1, false);
         }
-        botResponse = `Lampu Utama [1] Berhasil Dinyalakan! 💡 (Relay GPIO 12 aktif)`;
+        botResponse = `Lampu Utama [1] Berhasil Dinyalakan! 💡 (Relay GPIO 25 aktif)`;
       }
 
       // Lamp 1 OFF
@@ -253,7 +253,7 @@ export default function App() {
         if (r && r.status) {
           toggleRelay(1, false);
         }
-        botResponse = `Lampu Utama [1] Berhasil Dimatikan! 🔌 (Relay GPIO 12 mati)`;
+        botResponse = `Lampu Utama [1] Berhasil Dimatikan! 🔌 (Relay GPIO 25 mati)`;
       }
 
       // Lamp 2 ON
@@ -262,7 +262,7 @@ export default function App() {
         if (r && !r.status) {
           toggleRelay(2, false);
         }
-        botResponse = `Lampu Kamar [2] Berhasil Dinyalakan! 💡 (Relay GPIO 14 aktif)`;
+        botResponse = `Lampu Kamar [2] Berhasil Dinyalakan! 💡 (Relay GPIO 26 aktif)`;
       }
 
       // Lamp 2 OFF
@@ -271,13 +271,13 @@ export default function App() {
         if (r && r.status) {
           toggleRelay(2, false);
         }
-        botResponse = `Lampu Kamar [2] Berhasil Dimatikan! 🔌 (Relay GPIO 14 mati)`;
+        botResponse = `Lampu Kamar [2] Berhasil Dimatikan! 🔌 (Relay GPIO 26 mati)`;
       }
 
       // Variasi Lampu 1 Trigger
       else if (cleanText === '/variasi1_on' || cleanText.includes('variasi 1') || cleanText === 'variasi 1') {
         runVariasi1Animation();
-        botResponse = `Menerima Perintah: Memulai Pola Variasi Lampu 1 pada GPIO 27 & 26... 🎭`;
+        botResponse = `Menerima Perintah: Memulai Pola Variasi Lampu 1 pada GPIO 27 & 14... 🎭`;
       }
 
       // Variasi Lampu 2 Trigger
@@ -289,7 +289,7 @@ export default function App() {
       // All Off
       else if (cleanText === '/all_off' || cleanText === 'matikan semua' || cleanText === 'matikan semua lampu') {
         setRelays(prev => prev.map(r => ({ ...r, status: false })));
-        addLog('RELAY', 'Semua Relay (GPIO 12,14,27,26) dimatikan serentak via Telegram.', 'warning');
+        addLog('RELAY', 'Semua Relay (GPIO 25,26,27,14) dimatikan serentak via Telegram.', 'warning');
         botResponse = `Semua Relay (1-4) Telah Dinonaktifkan! 🔌❌`;
       }
 

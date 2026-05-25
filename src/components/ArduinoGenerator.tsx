@@ -14,17 +14,17 @@ import {
 
 export default function ArduinoGenerator() {
   const [boardType, setBoardType] = useState<'ESP32' | 'ESP8266'>('ESP32');
-  const [wifiSsid, setWifiSsid] = useState('MyWiFiName');
-  const [wifiPassword, setWifiPassword] = useState('MyWiFiPassword');
-  const [botToken, setBotToken] = useState('123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ');
-  const [chatId, setChatId] = useState('987654321');
-  const [dhtType, setDhtType] = useState<'DHT22' | 'DHT11'>('DHT22');
+  const [wifiSsid, setWifiSsid] = useState('Infinix HOT 50');
+  const [wifiPassword, setWifiPassword] = useState('123456789');
+  const [botToken, setBotToken] = useState('8894584427:AAGpWAZklMgGn7e4FZT-JfqCgjvAvGPN7V4');
+  const [chatId, setChatId] = useState('6127805495');
+  const [dhtType, setDhtType] = useState<'DHT22' | 'DHT11'>('DHT11');
   
   const [pinDht, setPinDht] = useState('4');
-  const [pinR1, setPinR1] = useState('12');
-  const [pinR2, setPinR2] = useState('14');
+  const [pinR1, setPinR1] = useState('25');
+  const [pinR2, setPinR2] = useState('26');
   const [pinR3, setPinR3] = useState('27');
-  const [pinR4, setPinR4] = useState('26');
+  const [pinR4, setPinR4] = useState('14');
 
   const [copied, setCopied] = useState(false);
 
@@ -39,10 +39,10 @@ export default function ArduinoGenerator() {
       setPinR4('12'); // D6
     } else {
       setPinDht('4');
-      setPinR1('12');
-      setPinR2('14');
+      setPinR1('25');
+      setPinR2('26');
       setPinR3('27');
-      setPinR4('26');
+      setPinR4('14');
     }
   };
 
